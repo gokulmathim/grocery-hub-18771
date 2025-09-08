@@ -1,1 +1,3 @@
-# grocery-hub-18771
+# Project Repository
+
+This is the initial README file for the project.
