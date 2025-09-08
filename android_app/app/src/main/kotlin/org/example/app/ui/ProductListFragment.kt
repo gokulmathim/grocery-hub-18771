@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,6 +21,7 @@ import org.example.app.model.Product
  * ProductListFragment
  *
  * Displays a scrollable list of products. Selecting an item opens ProductDetailActivity.
+ * Adds a personalized greeting at the top which is configurable via PreferencesHelper.
  * No params. Returns: Fragment instance displaying list.
  */
 class ProductListFragment : Fragment() {
@@ -37,6 +39,12 @@ class ProductListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Greeting
+        view.findViewById<TextView>(R.id.text_greeting)?.let { greeting ->
+            val name = PreferencesHelper.getDisplayName(requireContext())
+            greeting.text = getString(R.string.greeting_template, name)
+        }
+
         recycler = view.findViewById(R.id.recycler_products)
         recycler.layoutManager = LinearLayoutManager(requireContext())
         adapter = ProductAdapter { product ->

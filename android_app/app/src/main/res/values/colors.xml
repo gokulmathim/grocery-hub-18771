@@ -1,4 +1,5 @@
 <resources>
+    <!-- Light palette -->
     <color name="primary">#2E7D32</color>
     <color name="primaryDark">#1B5E20</color>
     <color name="accent">#FFC107</color>
@@ -6,4 +7,8 @@
     <color name="surface">#FFFFFF</color>
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
+
+    <!-- Gradient colors -->
+    <color name="gradientStart">#F3FFF6</color>
+    <color name="gradientEnd">#E7F6EB</color>
 </resources>

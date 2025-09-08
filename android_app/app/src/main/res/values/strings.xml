@@ -14,4 +14,7 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="place_order">Place Order</string>
     <string name="your_cart_is_empty">Your cart is empty</string>
+
+    <!-- Greeting template -->
+    <string name="greeting_template">Hi, %1$s 👋 Ready to shop?</string>
 </resources>
