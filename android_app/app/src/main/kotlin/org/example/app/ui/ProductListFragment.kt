@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,6 +23,7 @@ import org.example.app.model.Product
  *
  * Displays a scrollable list of products. Selecting an item opens ProductDetailActivity.
  * Adds a personalized greeting at the top which is configurable via PreferencesHelper.
+ * Provides horizontally scrollable quick filter chips (Organic, Discounts, Popular) without leaving the view.
  * No params. Returns: Fragment instance displaying list.
  */
 class ProductListFragment : Fragment() {
@@ -59,10 +61,59 @@ class ProductListFragment : Fragment() {
             viewModel.filter(it?.toString().orEmpty())
         }
 
+        // Setup quick filter chips
+        setupQuickFilters(view)
+
         viewModel.products.observe(viewLifecycleOwner) { list ->
             adapter.submit(list)
         }
         viewModel.loadProducts()
+    }
+
+    private fun setupQuickFilters(root: View) {
+        val container = root.findViewById<android.widget.LinearLayout>(R.id.chips_container)
+        container.removeAllViews()
+
+        val specs = listOf(
+            Triple(getString(R.string.filter_organic), "organic", false),
+            Triple(getString(R.string.filter_discounts), "discounts", false),
+            Triple(getString(R.string.filter_popular), "popular", false),
+        )
+
+        var selectedKey: String? = null
+
+        fun renderChip(title: String, key: String) : View {
+            val tv = TextView(requireContext())
+            tv.text = title
+            tv.setTextColor(resources.getColor(R.color.textPrimary, null))
+            tv.background = resources.getDrawable(R.drawable.bg_chip, null)
+            tv.setPadding(24)
+            val lp = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            lp.rightMargin = 12
+            tv.layoutParams = lp
+            tv.isSelected = false
+            tv.setOnClickListener {
+                selectedKey = if (selectedKey == key) null else key
+                viewModel.setQuickFilter(selectedKey)
+                // update visual selected state
+                for (i in 0 until container.childCount) {
+                    val child = container.getChildAt(i)
+                    child.alpha = 1.0f
+                }
+                if (selectedKey != null) {
+                    // dim others
+                    for (i in 0 until container.childCount) {
+                        val child = container.getChildAt(i)
+                        child.alpha = if ((child as TextView).text.toString().equals(title).not() && key == selectedKey) 0.6f else 1.0f
+                    }
+                }
+            }
+            return tv
+        }
+
+        specs.forEach { (title, key, _) ->
+            container.addView(renderChip(title, key))
+        }
     }
 
     companion object {

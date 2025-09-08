@@ -17,4 +17,14 @@
 
     <!-- Greeting template -->
     <string name="greeting_template">Hi, %1$s 👋 Ready to shop?</string>
+
+    <!-- Bottom navigation -->
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+
+    <!-- Filters -->
+    <string name="filter_organic">Organic</string>
+    <string name="filter_discounts">Discounts</string>
+    <string name="filter_popular">Popular</string>
 </resources>

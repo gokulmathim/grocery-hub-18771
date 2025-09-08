@@ -1,31 +1,52 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_soft_gradient">
 
-    <!-- Top app bar to host theme toggle -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/topAppBar"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/surface"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/textPrimary" />
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <!-- Top app bar to host theme toggle -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/surface"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/textPrimary" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cart"
+        app:srcCompat="@drawable/ic_cart"
+        app:tint="@color/textPrimary"
+        app:backgroundTint="@color/accent"
+        app:layout_anchor="@id/bottom_nav"
+        app:layout_anchorGravity="top|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="56dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemIconTint="@color/textPrimary"
+        app:itemTextColor="@color/textPrimary"
         app:menu="@menu/menu_bottom_nav"
         android:background="@color/surface"/>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
